@@ -1,53 +1,52 @@
 package co.edu.uco.nose.entity;
 
-import co.edu.uco.nose.business.domain.StateDomain;
+import java.util.UUID;
+
 import co.edu.uco.nose.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.nose.crosscutting.helpers.TextHelper;
 import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
 
-import java.util.UUID;
-
-public class CityEntity extends Entity {
+public final class CityEntity extends Entity {
 
     private UUID cityId;
-	private String name;
+    private String name;
     private StateEntity state;
 
     public CityEntity() {
-        setCityId(UUIDHelper.getUUIDHelper().getDefault());
+        setCityId(UUIDHelper.getDefault());
         setName(TextHelper.getDefault());
         setState(StateEntity.getDefault());
     }
 
     public CityEntity(final UUID cityId) {
-        setCityId(id);
+        setCityId(cityId);
         setName(TextHelper.getDefault());
         setState(StateEntity.getDefault());
     }
 
     public CityEntity(final UUID cityId, final String name, final StateEntity state) {
-        setCityId(id);
+        setCityId(cityId);
         setName(name);
         setState(state);
     }
 
-    static CityEntity getDefaultValue() {
+    public static CityEntity getDefault() {
         return new CityEntity();
     }
 
-    static CityEntity getDefaultValue(final CityEntity city) {
-        return ObjectHelper.getDefault(city, getDefaultValue());
+    public static CityEntity getDefault(final CityEntity city) {
+        return ObjectHelper.getDefault(city, getDefault());
     }
 
     public UUID getCityId() {
-		return cityId;
-	}
+        return cityId;
+    }
 
-	public void setCityId(UUID cityId) {
-		this.cityId = UUIDHelper.getDefault(cityId);
-	}
+    public void setCityId(final UUID cityId) {
+        this.cityId = UUIDHelper.getDefault(cityId);
+    }
 
-	public String getName() {
+    public String getName() {
         return name;
     }
 
@@ -62,6 +61,4 @@ public class CityEntity extends Entity {
     public void setState(final StateEntity state) {
         this.state = ObjectHelper.getDefault(state, StateEntity.getDefault());
     }
-
-
 }

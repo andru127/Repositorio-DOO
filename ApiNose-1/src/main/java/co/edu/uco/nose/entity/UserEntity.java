@@ -12,7 +12,8 @@ import java.util.UUID;
 
 public class UserEntity extends Entity {
 
-    private IdentificationTypeEntity identificationType;
+	private UUID userId;
+    private IdTypeEntity identificationType;
     private String identificationNumber;
     private String firstName;
     private String middleName;
@@ -26,13 +27,13 @@ public class UserEntity extends Entity {
 
     public UserEntity() {
         super(UUIDHelper.getUUIDHelper().getDefault());
-        setIdentificationType(IdentificationTypeEntity.getDefaultValue());
+        setIdentificationType(IdTypeEntity.getDefaultValue());
         setIdentificationNumber(TextHelper.getDefault());;
         setFirstName(TextHelper.getDefault());
         setMiddleName(TextHelper.getDefault());
         setLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
-        setResidenceCity(CityEntity.getDefaultValue());
+        setResidenceCity(CityEntity.getDefault());
         setEmail(TextHelper.getDefault());
         setCellPhoneNumber(TextHelper.getDefault());
         setCellPhoneNumberConfirmed(BooleanHelper.getDefault());
@@ -41,13 +42,13 @@ public class UserEntity extends Entity {
 
     public UserEntity(final UUID id) {
         super(id);
-        setIdentificationType(IdentificationTypeEntity.getDefaultValue());
+        setIdentificationType(IdTypeEntity.getDefaultValue());
         setIdentificationNumber(TextHelper.getDefault());
         setFirstName(TextHelper.getDefault());
         setMiddleName(TextHelper.getDefault());
         setLastName(TextHelper.getDefault());
         setSecondLastName(TextHelper.getDefault());
-        setResidenceCity(CityEntity.getDefaultValue());
+        setResidenceCity(CityEntity.getDefault());
         setEmail(TextHelper.getDefault());
         setCellPhoneNumber(TextHelper.getDefault());
         setCellPhoneNumberConfirmed(BooleanHelper.getDefault());
@@ -55,7 +56,7 @@ public class UserEntity extends Entity {
     }
 
 
-    public UserEntity(final UUID id, final IdentificationTypeEntity identificationType, final String identificationNumber, final String firstName,
+    public UserEntity(final UUID id, final IdTypeEntity identificationType, final String identificationNumber, final String firstName,
                       final String middleName, final String lastName, final String secondLastName, final CityEntity residenceCity, final String email,
                       final String cellPhoneNumber, final boolean emailConfirmed, final boolean cellPhoneNumberConfirmed) {
         super(id);
@@ -77,15 +78,23 @@ public class UserEntity extends Entity {
     }
 
     static UserEntity getDefaultValue(final UserEntity user) {
-        return ObjetcHelper.getDefault(user, getDefaultValue());
+        return ObjectHelper.getDefault(user, getDefaultValue());
     }
 
-    public IdentificationTypeEntity getIdentificationType() {
+    public UUID getUserId() {
+		return userId;
+	}
+
+	public void setUserId(UUID userId) {
+		this.userId = UUIDHelper.getUUIDHelper().getDefault(userId);
+	}
+
+	public IdTypeEntity getIdentificationType() {
         return identificationType;
     }
 
-    public void setIdentificationType(final IdentificationTypeEntity identificationType) {
-        this.identificationType = ObjetcHelper.getDefault(identificationType, IdentificationTypeEntity.getDefaultValue());
+    public void setIdentificationType(final IdTypeEntity identificationType) {
+        this.identificationType = ObjectHelper.getDefault(identificationType, IdTypeEntity.getDefaultValue());
     }
 
     public String getIdentificationNumber() {
@@ -133,7 +142,7 @@ public class UserEntity extends Entity {
     }
 
     public void setResidenceCity(final CityEntity residenceCity) {
-        this.residenceCity = ObjetcHelper.getDefault(residenceCity, CityEntity.getDefaultValue());
+        this.residenceCity = ObjectHelper.getDefault(residenceCity, CityEntity.getDefault());
     }
 
     public String getEmail() {

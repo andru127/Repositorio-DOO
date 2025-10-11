@@ -28,11 +28,11 @@ public class IdTypeEntity extends Entity {
         this.name = name;
     }
 
-    static IdentificationTypeEntity getDefaultValue() {
-        return new IdentificationTypeEntity();
+    static IdTypeEntity getDefaultValue() {
+        return new IdTypeEntity();
     }
 
-    static IdentificationTypeEntity getDefaultValue(final IdentificationTypeEntity identificationType) {
+    static IdTypeEntity getDefaultValue(final IdTypeEntity identificationType) {
         return ObjectHelper.getDefault(identificationType, getDefaultValue());
     }
 
