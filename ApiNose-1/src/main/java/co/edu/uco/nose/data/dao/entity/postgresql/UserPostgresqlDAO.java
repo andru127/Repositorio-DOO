@@ -23,8 +23,8 @@ public class UserPostgresqlDAO extends SqlConnection implements UserDAO{
 		SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 		
 		final var sql = new StringBuilder();
-		sql.append("Insert into");
-		sql.append("Select");
+		sql.append("INSERT INTO user (id, tipoIdentificacion, numeroIdentificacion, primerNombre, segundoNombre, primerApellido, segundoApellido, ciudadResidencia, correoElectronico, numeroTelefonoMovil, correoElectronicoConfirmado, numeroTelefonoMovilConfirmado)");
+		sql.append("Select ?,?,?,?,?,?,?,?,?,?,?,?");
 		
 		try (var prepareStatement = this.getConnection().prepareStatement(sql.toString())) {
 			

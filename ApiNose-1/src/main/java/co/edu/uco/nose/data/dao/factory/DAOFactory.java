@@ -54,10 +54,11 @@ public abstract class DAOFactory {
     }
 
     protected final void commitTransaction(){
-        SqlConnectionHelper.ensureTransactionIsStarted(connection);
+        
+    	SqlConnectionHelper.ensureTransactionIsStarted(connection);
 
         try{
-            connection.(false);
+            connection.setAutoCommit(false);
         } catch (final SQLException exception){
             var userMessage = "";
             var techincalMessage = "";

@@ -22,14 +22,14 @@ public abstract class SqlConnection {
 	private void setConnection(Connection connection) {
 		if (ObjectHelper.isNull(connection)) {
 			var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_IS_EMPTY.getContent();
-			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_IS_EMPTY.getContent();
+			var technicalMessage = MessagesEnum.TECHNINAL_ERROR_SQL_CONNECTION_IS_CLOSED.getContent();
 			throw NoseException.create(userMessage, technicalMessage);
 		}
 		
 		try {
 			if(connection.isClosed()) {
 				var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_IS_CLOSED.getContent();
-				var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_IS_CLOSED.getContent();
+				var technicalMessage = MessagesEnum.TECHNINAL_ERROR_SQL_CONNECTION_IS_CLOSED.getContent();
 				throw NoseException.create(userMessage, technicalMessage);
 				
 			}
