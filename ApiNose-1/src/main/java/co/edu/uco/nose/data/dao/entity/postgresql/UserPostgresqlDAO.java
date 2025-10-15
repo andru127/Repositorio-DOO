@@ -11,12 +11,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public final class UserPostgreSqlDAO extends PostgreSqlConnection implements UserDAO {
+public final class UserPostgresqlDAO extends SqlConnection implements UserDAO {
 
-    public UserPostgreSqlDAO(final Connection connection) {
+    public UserPostgresqlDAO(final Connection connection) {
         super(connection);
     }
 
@@ -25,24 +26,25 @@ public final class UserPostgreSqlDAO extends PostgreSqlConnection implements Use
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO Usuario(");
-        sql.append("id, tipoIdentificacion, numeroIdentificacion, primerNombre, segundoNombre, ");
+        sql.append("INSERT INTO User(id, tipoIdentificacion, numeroIdentificacion, primerNombre, segundoNombre, primerApellido, segundoApellido, ciudadResidencia, correoElectronico, numeroTelefonoMovil, correoElectronicoConfirmado, numeroTelefonoMovilConfirmado) ");
+        sql.append("SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
         sql.append("primerApellido, segundoApellido, ciudadResidencia, correoElectronico, ");
         sql.append("numeroTelefonoMovil, correoElectronicoConfirmado, numeroTelefonoMovilConfirmado) ");
         sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
-        try (final PreparedStatement preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
+        try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, entity.getId());
             preparedStatement.setObject(2, entity.getIdentificationType().getId());
-            preparedStatement.setObject(3, entity.getIdentificationNumber());
+            preparedStatement.setString(3, entity.getIdentificationNumber());
             preparedStatement.setString(4, entity.getFirstName());
+            preparedStatement.setString(5, entity.getMiddleName());
             preparedStatement.setString(6, entity.getLastName());
             preparedStatement.setString(7, entity.getSecondLastName());
             preparedStatement.setObject(8, entity.getResidenceCity().getId());
             preparedStatement.setString(9, entity.getEmail());
             preparedStatement.setString(10, entity.getCellPhoneNumber());
             preparedStatement.setBoolean(11, entity.isEmailConfirmed());
-            preparedStatement.setBoolean(12, entity.isCellPhoneNumberConfirmed());
+            preparedStatement.setBoolean(12, entity.CellPhoneNumberConfirmed());
 
             preparedStatement.executeUpdate();
 
@@ -59,11 +61,12 @@ public final class UserPostgreSqlDAO extends PostgreSqlConnection implements Use
 
     @Override
     public List<UserEntity> findAll() {
-        
+        return new ArrayList<>();    
     }
 
     @Override
     public List<UserEntity> findByFilter(final UserEntity filterEntity) {
+    	return new ArrayList<>(); 
     }
 
     @Override
@@ -97,48 +100,48 @@ public final class UserPostgreSqlDAO extends PostgreSqlConnection implements Use
         sql.append("INNER JOIN Pais AS p ON d.pais = p.id ");
         sql.append("WHERE u.id = ?;");
 
+        UserEntity user = null;
+        
         try (final PreparedStatement preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, id);
 
-            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-
-                    var identificationType = new IdentificationTypeEntity();
-                    identificationType.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idTipoIdentificacion")));
-                    identificationType.setName(resultSet.getString("nombreTipoIdentificacion"));
-
-                    var country = new CountryEntity();
-                    country.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idPaisDepartamentoCiudadResidencia")));
+            try (var resultSet = preparedStatement.executeQuery()) {
+                
+            	if (resultSet.next()) {
+            		var idType = new IdTypeEntity();
+                	idType.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idTipoIdentificacion")));
+                    idType.setName(resultSet.getString("nombreTipoIdentificacion"));
+                    
+            		var country = new CountryEntity();
+                	country.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idPaisDepartamentoCiudadResidencia")));
                     country.setName(resultSet.getString("nombrePaisDepartamentoCiudadResidencia"));
-
+                    
                     var state = new StateEntity();
                     state.setCountry(country);
                     state.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idDepartamentoCiudadResidencia")));
                     state.setName(resultSet.getString("nombreDepartamentoCiudadResidencia"));
-
+                    
                     var city = new CityEntity();
                     city.setState(state);
                     city.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idCiudadResidencia")));
                     city.setName(resultSet.getString("nombreCiudadResidencia"));
-
-                    var user = new UserEntity();
+                    
                     user.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
-                    user.setIdentificationType(identificationType);
-                    user.setIdentificationNumber(resultSet.getString("numeroIdentificacion"));
+                    user.setIdentificationType(idType);
                     user.setFirstName(resultSet.getString("primerNombre"));
+                    user.setMiddleName(resultSet.getString("segundoNombre"));
                     user.setLastName(resultSet.getString("primerApellido"));
                     user.setSecondLastName(resultSet.getString("segundoApellido"));
                     user.setResidenceCity(city);
                     user.setEmail(resultSet.getString("correoElectronico"));
                     user.setCellPhoneNumber(resultSet.getString("numeroTelefonoMovil"));
-                    user.setEmailConfirmed(resultSet.getBoolean("correoElectronicoConfirmado"));
-                    user.setCellPhoneNumberConfirmed(resultSet.getBoolean("numeroTelefonoMovilConfirmado"));
-
-                    return user;
+                    user.setEmailConfirmed(resultSet.getBoolean("confirmacionCorreoElectronico"));
+                    user.setCellPhoneNumberConfirmed(resultSet.getBoolean("confirmacionNumeroTelefonoMovil"));
+                    
                 }
             }
 
-            return null;
+            
 
         } catch (final SQLException exception) {
             var userMessage = "Se ha presentado un problema tratando de consultar la información de un usuario. Intente de nuevo.";
@@ -149,6 +152,8 @@ public final class UserPostgreSqlDAO extends PostgreSqlConnection implements Use
             var technicalMessage = "Excepción inesperada al consultar Usuario: " + exception.getMessage();
             throw NoseException.create(exception, userMessage, technicalMessage);
         }
+        
+        return user;
     }
 
     @Override
@@ -181,7 +186,7 @@ public final class UserPostgreSqlDAO extends PostgreSqlConnection implements Use
             preparedStatement.setString(8, entity.getEmail());
             preparedStatement.setString(9, entity.getCellPhoneNumber());
             preparedStatement.setBoolean(10, entity.isEmailConfirmed());
-            preparedStatement.setBoolean(11, entity.isCellPhoneNumberConfirmed());
+            preparedStatement.setBoolean(11, entity.CellPhoneNumberConfirmed());
             preparedStatement.setObject(12, entity.getId());
 
             preparedStatement.executeUpdate();

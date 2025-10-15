@@ -6,14 +6,14 @@ import co.edu.uco.nose.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.nose.crosscutting.helpers.TextHelper;
 import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
 
-public final class CityEntity extends Entity {
+public final class CityEntity extends Entity  {
 
     private UUID cityId;
     private String name;
     private StateEntity state;
 
     public CityEntity() {
-        setCityId(UUIDHelper.getDefault());
+        setCityId(UUIDHelper.getUUIDHelper().getDefault());
         setName(TextHelper.getDefault());
         setState(StateEntity.getDefault());
     }
@@ -43,7 +43,7 @@ public final class CityEntity extends Entity {
     }
 
     public void setCityId(final UUID cityId) {
-        this.cityId = UUIDHelper.getDefault(cityId);
+        this.cityId = UUIDHelper.getUUIDHelper().getDefault(cityId);
     }
 
     public String getName() {

@@ -1,4 +1,4 @@
-package co.edu.uco.nose.data.dao.factory.sqlserver;
+package co.edu.uco.nose.data.dao.factory.postgresql;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,9 +16,9 @@ import co.edu.uco.nose.data.dao.entity.postgresql.StatePostgresqlDAO;
 import co.edu.uco.nose.data.dao.entity.postgresql.UserPostgresqlDAO;
 import co.edu.uco.nose.data.dao.factory.DAOFactory;
 
-public class SqlServerDAOFactory extends DAOFactory {
+public class PostgresqlDAOFactory extends DAOFactory {
 
-	public SqlServerDAOFactory() {
+	public PostgresqlDAOFactory() {
 		 
 	}
 	

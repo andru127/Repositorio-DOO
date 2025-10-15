@@ -1,8 +1,6 @@
 package co.edu.uco.nose.entity;
 
 import co.edu.uco.nose.entity.UserEntity;
-import co.edu.uco.nose.entity.Entity;
-import co.edu.uco.nose.business.domain.IdentificationTypeDomain;
 import co.edu.uco.nose.crosscutting.helpers.BooleanHelper;
 import co.edu.uco.nose.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.nose.crosscutting.helpers.TextHelper;
@@ -23,11 +21,14 @@ public class UserEntity extends Entity {
     private String email;
     private String cellPhoneNumber;
     private boolean emailConfirmed;
+    private boolean emailConfirmedIsDefaultValue;
     private boolean cellPhoneNumberConfirmed;
+    private boolean cellPhoneNumberConfirmedIsDefaultValue;
 
+    
     public UserEntity() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
-        setIdentificationType(IdTypeEntity.getDefaultValue());
+        setUserId(UUIDHelper.getUUIDHelper().getDefault());
+        setIdentificationType(IdTypeEntity.getDefault());
         setIdentificationNumber(TextHelper.getDefault());;
         setFirstName(TextHelper.getDefault());
         setMiddleName(TextHelper.getDefault());
@@ -36,13 +37,15 @@ public class UserEntity extends Entity {
         setResidenceCity(CityEntity.getDefault());
         setEmail(TextHelper.getDefault());
         setCellPhoneNumber(TextHelper.getDefault());
-        setCellPhoneNumberConfirmed(BooleanHelper.getDefault());
-        setEmailConfirmed(BooleanHelper.getDefault());
+        setCellPhoneNumberConfirmed(false);
+        setCellPhoneNumberConfirmedIsDefaultValue(false);
+        setEmailConfirmed(false);
+        setEmailConfirmedIsDefaultValue(false);
     }
 
     public UserEntity(final UUID id) {
-        super(id);
-        setIdentificationType(IdTypeEntity.getDefaultValue());
+        setUserId(userId);
+        setIdentificationType(IdTypeEntity.getDefault());
         setIdentificationNumber(TextHelper.getDefault());
         setFirstName(TextHelper.getDefault());
         setMiddleName(TextHelper.getDefault());
@@ -51,26 +54,30 @@ public class UserEntity extends Entity {
         setResidenceCity(CityEntity.getDefault());
         setEmail(TextHelper.getDefault());
         setCellPhoneNumber(TextHelper.getDefault());
-        setCellPhoneNumberConfirmed(BooleanHelper.getDefault());
-        setEmailConfirmed(BooleanHelper.getDefault());
+        setCellPhoneNumberConfirmed(false);
+        setCellPhoneNumberConfirmedIsDefaultValue(false);
+        setEmailConfirmed(false);
+        setEmailConfirmedIsDefaultValue(false);
+
     }
 
 
     public UserEntity(final UUID id, final IdTypeEntity identificationType, final String identificationNumber, final String firstName,
                       final String middleName, final String lastName, final String secondLastName, final CityEntity residenceCity, final String email,
                       final String cellPhoneNumber, final boolean emailConfirmed, final boolean cellPhoneNumberConfirmed) {
-        super(id);
-        this.identificationType = identificationType;
-        this.identificationNumber = identificationNumber;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.secondLastName = secondLastName;
-        this.residenceCity = residenceCity;
-        this.email = email;
-        this.cellPhoneNumber = cellPhoneNumber;
-        this.emailConfirmed = emailConfirmed;
-        this.cellPhoneNumberConfirmed = cellPhoneNumberConfirmed;
+        setUserId(userId);
+        setIdentificationType(identificationType);
+        setIdentificationNumber(identificationNumber);
+        setFirstName(firstName);
+        setMiddleName(middleName);
+        setLastName(lastName);
+        setSecondLastName(secondLastName);
+        setResidenceCity(residenceCity);
+        setEmail(email);
+        setCellPhoneNumber(cellPhoneNumber);
+        setCellPhoneNumberConfirmed(cellPhoneNumberConfirmed);
+        setEmailConfirmed(emailConfirmed);
+        setCellPhoneNumberConfirmed(cellPhoneNumberConfirmed);
     }
 
     static UserEntity getDefaultValue() {
@@ -81,6 +88,8 @@ public class UserEntity extends Entity {
         return ObjectHelper.getDefault(user, getDefaultValue());
     }
 
+    
+    
     public UUID getUserId() {
 		return userId;
 	}
@@ -94,7 +103,7 @@ public class UserEntity extends Entity {
     }
 
     public void setIdentificationType(final IdTypeEntity identificationType) {
-        this.identificationType = ObjectHelper.getDefault(identificationType, IdTypeEntity.getDefaultValue());
+        this.identificationType = IdTypeEntity.getDefault(identificationType);
     }
 
     public String getIdentificationNumber() {
@@ -142,7 +151,7 @@ public class UserEntity extends Entity {
     }
 
     public void setResidenceCity(final CityEntity residenceCity) {
-        this.residenceCity = ObjectHelper.getDefault(residenceCity, CityEntity.getDefault());
+        this.residenceCity = CityEntity.getDefault(residenceCity);
     }
 
     public String getEmail() {
@@ -168,17 +177,30 @@ public class UserEntity extends Entity {
     public void setEmailConfirmed(final boolean emailConfirmed) {
         this.emailConfirmed = BooleanHelper.getDeafult(emailConfirmed);
     }
+    
+    public boolean isEmailConfirmedIsDefaultValue() {
+        return emailConfirmedIsDefaultValue;
+    }
 
-    public boolean isCellPhoneNumberConfirmed() {
+    public void setEmailConfirmedIsDefaultValue(final boolean emailConfirmedIsDefaultValue) {
+        this.emailConfirmedIsDefaultValue = false;
+    }
+
+    public boolean CellPhoneNumberConfirmed() {
         return cellPhoneNumberConfirmed;
     }
 
     public void setCellPhoneNumberConfirmed(final boolean cellPhoneNumberConfirmed) {
         this.cellPhoneNumberConfirmed = BooleanHelper.getDeafult(cellPhoneNumberConfirmed);
     }
-
-
-    public Object getSecondName() {
-        return null;
+    
+    public boolean CellPhoneNumberConfirmedIsDefaultValue() {
+        return cellPhoneNumberConfirmedIsDefaultValue;
     }
+
+    public void setCellPhoneNumberConfirmedIsDefaultValue(final boolean cellPhoneNumberConfirmedIsDefaultValue) {
+        this.cellPhoneNumberConfirmedIsDefaultValue = false;
+    }
+
+
 }

@@ -1,6 +1,5 @@
 package co.edu.uco.nose.entity;
 
-import co.edu.uco.nose.entity.Entity;
 import co.edu.uco.nose.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.nose.crosscutting.helpers.TextHelper;
 import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
@@ -9,38 +8,49 @@ import java.util.UUID;
 
 public final class CountryEntity extends Entity {
 
-    private String name;
+    private UUID countryId;
+	private String name;
+
+	public CountryEntity() {
+		setCountryId(UUIDHelper.getUUIDHelper().getDefault());
+		setName(TextHelper.getDefault());
+	}
+	
+	public CountryEntity(final UUID countryId) {
+		setCountryId(countryId);
+		setName(TextHelper.getDefault());
+	}
+	
+	private CountryEntity(UUID countryId, String name) {
+		setCountryId(countryId);
+		setName(name);
+	}
+	
 
 
-    public CountryEntity() {
-        super(UUIDHelper.getUUIDHelper().getDefault());
-        setName(TextHelper.getDefault());
-    }
+	
+	static CountryEntity getDefault() {
+		return new CountryEntity();
+	}
+	
+	static CountryEntity getDefault(final CountryEntity country) {
+		return ObjectHelper.getDefault(country, getDefault());
+	}
 
-    public CountryEntity(final UUID id) {
-        super(id);
-        setName(TextHelper.getDefault());
-    }
+	public UUID getCountryId() {
+		return countryId;
+	}
 
-    public CountryEntity(final UUID id, final String name) {
-        super(id);
-        setName(name);
-    }
+	public void setCountryId(UUID countryId) {
+		this.countryId = UUIDHelper.getUUIDHelper().getDefault(countryId);
+	}
 
-    static CountryEntity getDefaultValue() {
-        return new CountryEntity();
-    }
+	public String getName() {
+		return name;
+	}
 
-    static CountryEntity getDefaultValue(final CountryEntity country) {
-        return ObjectHelper.getDefault(country, getDefaultValue());
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = TextHelper.getDefaultWithTrim(name);
-    }
+	public void setName(String name) {
+		this.name = TextHelper.getDefaultWithTrim(name);
+	}
+	
 }

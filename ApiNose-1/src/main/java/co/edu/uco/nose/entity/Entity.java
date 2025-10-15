@@ -1,12 +1,15 @@
 package co.edu.uco.nose.entity;
 
 import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
-
 import java.util.UUID;
 
 class Entity {
 
     private UUID id;
+
+    protected Entity() {
+        setId(UUIDHelper.getUUIDHelper().getDefault());
+    }
 
     protected Entity(final UUID id) {
         setId(id);
@@ -19,5 +22,4 @@ class Entity {
     public void setId(UUID id) {
         this.id = UUIDHelper.getUUIDHelper().getDefault(id);
     }
-
 }

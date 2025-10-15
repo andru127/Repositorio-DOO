@@ -2,12 +2,11 @@ package co.edu.uco.nose.entity;
 
 import java.util.UUID;
 
-import co.edu.uco.nose.business.domain.CountryDomain;
 import co.edu.uco.nose.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.nose.crosscutting.helpers.TextHelper;
 import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
 
-public class StateEntity {
+public class StateEntity extends Entity {
 	
 	private UUID stateId;
 	private String name;
@@ -16,7 +15,7 @@ public class StateEntity {
 	public StateEntity() {
 		setStateId(UUIDHelper.getUUIDHelper().getDefault());
 		setName(TextHelper.getDefault());
-		setCountry(CountryEntity.getDefaultValue());
+		setCountry(CountryEntity.getDefault());
 	}
 	
 	public StateEntity(final UUID StateId) {
@@ -25,7 +24,7 @@ public class StateEntity {
 		setCountry(country);
 	}
 	
-	private StateEntity(UUID stateId, String name, CountryDomain country) {
+	private StateEntity(UUID stateId, String name, CountryEntity country) {
 		setStateId(stateId);
 		setName(name);
 		setCountry(country);
@@ -59,7 +58,7 @@ public class StateEntity {
 	}
 
 	public void setCountry(CountryEntity countryEntity) {
-		this.country = CountryEntity.getDefaultValue(countryEntity);
+		this.country = CountryEntity.getDefault(countryEntity);
 	}
 
 }
