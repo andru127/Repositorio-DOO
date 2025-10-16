@@ -26,6 +26,14 @@ public enum MessagesEnum {
 
     TECHNICAL_ERROR_TRANSACTION_IS_NOT_STARTED("Transacción no iniciada en la fuente de datos", "Se intentó ejecutar una operación sin que existiera una transacción activa en la conexión actual."),
 
+    USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_OPEN("Error inesperado validando si la transacción esta abierta", "Ocurrió un problema inesperado al validar si la transacción contra la fuente de información deseada estaba abierta. Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),
+
+    TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_OPEN( "Error inesperado validando si la transacción estaba abierta",  "Se presentó un problema inesperado al intentar validar si la transacción contra la base de datos había sido abierta. No fue una SQLException, sino un error no controlado en el proceso de validación."),
+
+    USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_CLOSED("Error inesperado validando si la transacción esta cerrada", "Ocurrió un problema inesperado al validar si la transacción contra la fuente de información deseada estaba cerrada. Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),
+
+    TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_CLOSED( "Error inesperado validando si la transacción estaba cerrada",  "Se presentó un problema inesperado al intentar validar si la transacción contra la base de datos había sido cerrada. No fue una SQLException, sino un error no controlado en el proceso de validación."),
+
     USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_STARTED("Error inesperado validando el estado de la transacción", "Ocurrió un problema inesperado al validar si la transacción contra la fuente de información deseada estaba iniciada. Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),
 
     USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_NOT_STARTED("Error inesperado validando el estado de la transacción", "Ocurrió un problema inesperado al validar si la transacción contra la fuente de información deseada NO estaba iniciada. Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),

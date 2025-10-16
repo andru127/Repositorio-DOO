@@ -18,12 +18,12 @@ public abstract class DAOFactory {
     protected static FactoryEnum factory = FactoryEnum.POSTGRESQL;
 
     public static DAOFactory getFactory() {
-        switch (factory) {
-        	case SQLSERVER:
-				return new PostgresqlDAOFactory();
-		 default:
-			var userMessage = "Factoria no iniciada";
-			var technicalMessage = "Factoria no valida";
+    	
+    	if (FactoryEnum.POSTGRESQL.equals(factory)) {
+    		return new PostgresqlDAOFactory();
+		}else {
+			var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_NOT_STARTED.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_NOT_STARTED.getContent();
 			throw NoseException.create(userMessage, technicalMessage);
 		}
     }
@@ -52,8 +52,8 @@ public abstract class DAOFactory {
             var techincalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_NOT_STARTED.getContent();
             throw NoseException.create(exception, userMessage, techincalMessage);
         } catch (final Exception exception){
-            var userMessage = MessagesEnum.USER_ERROR_TRANSACTION_IS_NOT_STARTED.getContent();
-            var techincalMessage = MessagesEnum.TECHNICAL_ERROR_TRANSACTION_IS_NOT_STARTED.getContent();
+            var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_NOT_STARTED.getContent();
+            var techincalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_NOT_STARTED.getContent();
             throw NoseException.create(exception, userMessage, techincalMessage);
         }
 
@@ -70,8 +70,8 @@ public abstract class DAOFactory {
             var techincalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_STARTED.getContent();
             throw NoseException.create(exception, userMessage, techincalMessage);
         } catch (final Exception exception){
-            var userMessage = MessagesEnum.USER_ERROR_TRANSACTION_IS_STARTED.getContent();
-            var techincalMessage = MessagesEnum.TECHNICAL_ERROR_TRANSACTION_IS_STARTED.getContent();
+            var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_STARTED.getContent();
+            var techincalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_STARTED.getContent();
             throw NoseException.create(exception, userMessage, techincalMessage);
         }
     }
@@ -85,8 +85,8 @@ public abstract class DAOFactory {
             var techincalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_STARTED.getContent();
             throw NoseException.create(exception, userMessage, techincalMessage);
         } catch (final Exception exception){
-            var userMessage = MessagesEnum.USER_ERROR_TRANSACTION_IS_STARTED.getContent();
-            var techincalMessage = MessagesEnum.TECHNICAL_ERROR_TRANSACTION_IS_STARTED.getContent();
+            var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_STARTED.getContent();
+            var techincalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_STARTED.getContent();
             throw NoseException.create(exception, userMessage, techincalMessage);
         }
     }
@@ -101,8 +101,8 @@ public abstract class DAOFactory {
             var techincalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_OPEN.getContent();
             throw NoseException.create(exception, userMessage, techincalMessage);
         } catch (final Exception exception){
-            var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_IS_OPEN.getContent();
-            var techincalMessage = MessagesEnum.TECHNINAL_ERROR_SQL_CONNECTION_IS_OPEN.getContent();
+            var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_OPEN.getContent();
+            var techincalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_OPEN.getContent();
             throw NoseException.create(exception,userMessage, techincalMessage);
         }
 

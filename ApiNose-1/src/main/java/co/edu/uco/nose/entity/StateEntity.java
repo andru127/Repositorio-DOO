@@ -6,7 +6,7 @@ import co.edu.uco.nose.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.nose.crosscutting.helpers.TextHelper;
 import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
 
-public class StateEntity extends Entity {
+public class StateEntity  {
 	
 	private UUID stateId;
 	private String name;

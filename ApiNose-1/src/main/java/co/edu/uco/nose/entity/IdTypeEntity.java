@@ -6,7 +6,7 @@ import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
 
 import java.util.UUID;
 
-public class IdTypeEntity extends Entity {
+public class IdTypeEntity  {
 
     private UUID IdTypeId;
 	private String name;
