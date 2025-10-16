@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import co.edu.uco.nose.crosscutting.exception.NoseException;
+import co.edu.uco.nose.crosscutting.messagescatalog.MessagesEnum;
 import co.edu.uco.nose.data.dao.entity.CityDAO;
 import co.edu.uco.nose.data.dao.entity.CountryDAO;
 import co.edu.uco.nose.data.dao.entity.IdTypeDAO;
@@ -16,10 +17,10 @@ import co.edu.uco.nose.data.dao.entity.postgresql.StatePostgresqlDAO;
 import co.edu.uco.nose.data.dao.entity.postgresql.UserPostgresqlDAO;
 import co.edu.uco.nose.data.dao.factory.DAOFactory;
 
-public class PostgresqlDAOFactory extends DAOFactory {
+public final class PostgresqlDAOFactory extends DAOFactory {
 
 	public PostgresqlDAOFactory() {
-		 
+		 openConnection();
 	}
 	
 	@Override
@@ -27,12 +28,12 @@ public class PostgresqlDAOFactory extends DAOFactory {
 		try {
 		this.connection = DriverManager.getConnection("");
 		} catch(final SQLException exception) {
-			var userMessage = "";
-			var technicalMessage = "";
+			var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_CLOSED.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_CLOSED.getContent();
 			throw NoseException.create(userMessage, technicalMessage);
 		}catch(final Exception exception) {
-			var userMessage = "";
-			var technicalMessage = "";
+			var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_CLOSED.getContent();
+			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_UNEXPECTED_ERROR_VALIDATING_TRANSACTION_IS_CLOSED.getContent();
 			throw NoseException.create(userMessage, technicalMessage);
 		}
 		

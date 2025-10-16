@@ -33,14 +33,14 @@ public final class UserPostgresqlDAO extends SqlConnection implements UserDAO {
         sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
-            preparedStatement.setObject(1, entity.getId());
-            preparedStatement.setObject(2, entity.getIdentificationType().getId());
+            preparedStatement.setObject(1, entity.getUserId());
+            preparedStatement.setObject(2, entity.getIdentificationType().getIdTypeId());
             preparedStatement.setString(3, entity.getIdentificationNumber());
             preparedStatement.setString(4, entity.getFirstName());
             preparedStatement.setString(5, entity.getMiddleName());
             preparedStatement.setString(6, entity.getLastName());
             preparedStatement.setString(7, entity.getSecondLastName());
-            preparedStatement.setObject(8, entity.getResidenceCity().getId());
+            preparedStatement.setObject(8, entity.getResidenceCity().getCityId());
             preparedStatement.setString(9, entity.getEmail());
             preparedStatement.setString(10, entity.getCellPhoneNumber());
             preparedStatement.setBoolean(11, entity.isEmailConfirmed());
@@ -72,7 +72,9 @@ public final class UserPostgresqlDAO extends SqlConnection implements UserDAO {
     @Override
     public UserEntity findById(final UUID id) {
         final var sql = new StringBuilder();
-
+        
+        var user = new UserEntity();
+        
         sql.append("SELECT ");
         sql.append("u.id, ");
         sql.append("ti.id AS idTipoIdentificacion, ");
@@ -100,7 +102,7 @@ public final class UserPostgresqlDAO extends SqlConnection implements UserDAO {
         sql.append("INNER JOIN Pais AS p ON d.pais = p.id ");
         sql.append("WHERE u.id = ?;");
 
-        UserEntity user = null;
+       
         
         try (final PreparedStatement preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, id);
@@ -109,24 +111,24 @@ public final class UserPostgresqlDAO extends SqlConnection implements UserDAO {
                 
             	if (resultSet.next()) {
             		var idType = new IdTypeEntity();
-                	idType.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idTipoIdentificacion")));
+                	idType.setIdTypeId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idTipoIdentificacion")));
                     idType.setName(resultSet.getString("nombreTipoIdentificacion"));
                     
             		var country = new CountryEntity();
-                	country.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idPaisDepartamentoCiudadResidencia")));
+                	country.setCountryId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idPaisDepartamentoCiudadResidencia")));
                     country.setName(resultSet.getString("nombrePaisDepartamentoCiudadResidencia"));
                     
                     var state = new StateEntity();
                     state.setCountry(country);
-                    state.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idDepartamentoCiudadResidencia")));
+                    state.setStateId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idDepartamentoCiudadResidencia")));
                     state.setName(resultSet.getString("nombreDepartamentoCiudadResidencia"));
                     
                     var city = new CityEntity();
                     city.setState(state);
-                    city.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idCiudadResidencia")));
+                    city.setCityId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("idCiudadResidencia")));
                     city.setName(resultSet.getString("nombreCiudadResidencia"));
                     
-                    user.setId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
+                    user.setUserId(UUIDHelper.getUUIDHelper().getFromString(resultSet.getString("id")));
                     user.setIdentificationType(idType);
                     user.setFirstName(resultSet.getString("primerNombre"));
                     user.setMiddleName(resultSet.getString("segundoNombre"));
@@ -177,17 +179,18 @@ public final class UserPostgresqlDAO extends SqlConnection implements UserDAO {
 
         try (final PreparedStatement preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
 
-            preparedStatement.setObject(1, entity.getIdentificationType().getId());
+            preparedStatement.setObject(1, entity.getIdentificationType().getIdTypeId());
             preparedStatement.setObject(2, entity.getIdentificationNumber());
             preparedStatement.setString(3, entity.getFirstName());
+            preparedStatement.setString(4, entity.getMiddleName());
             preparedStatement.setString(5, entity.getLastName());
             preparedStatement.setString(6, entity.getSecondLastName());
-            preparedStatement.setObject(7, entity.getResidenceCity().getId());
+            preparedStatement.setObject(7, entity.getResidenceCity().getCityId());
             preparedStatement.setString(8, entity.getEmail());
             preparedStatement.setString(9, entity.getCellPhoneNumber());
             preparedStatement.setBoolean(10, entity.isEmailConfirmed());
             preparedStatement.setBoolean(11, entity.CellPhoneNumberConfirmed());
-            preparedStatement.setObject(12, entity.getId());
+            
 
             preparedStatement.executeUpdate();
 

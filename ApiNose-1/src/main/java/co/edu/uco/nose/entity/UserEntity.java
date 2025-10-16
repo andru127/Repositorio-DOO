@@ -8,7 +8,7 @@ import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
 
 import java.util.UUID;
 
-public class UserEntity extends Entity {
+public class UserEntity  {
 
 	private UUID userId;
     private IdTypeEntity identificationType;

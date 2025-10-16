@@ -6,7 +6,7 @@ import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
 
 import java.util.UUID;
 
-public final class CountryEntity extends Entity {
+public final class CountryEntity  {
 
     private UUID countryId;
 	private String name;
