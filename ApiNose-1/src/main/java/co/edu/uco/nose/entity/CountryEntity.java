@@ -21,7 +21,7 @@ public final class CountryEntity  {
 		setName(TextHelper.getDefault());
 	}
 	
-	private CountryEntity(UUID countryId, String name) {
+	public CountryEntity(UUID countryId, String name) {
 		setCountryId(countryId);
 		setName(name);
 	}

@@ -21,7 +21,7 @@ public class IdTypeEntity  {
 	   setName(TextHelper.getDefault());
    }
    
-   private IdTypeEntity(UUID IdTypeId, String name) {
+   public IdTypeEntity(UUID IdTypeId, String name) {
 	   setIdTypeId(IdTypeId);
 	   setName(name);
    }

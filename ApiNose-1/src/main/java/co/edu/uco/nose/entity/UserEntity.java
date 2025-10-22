@@ -175,7 +175,7 @@ public class UserEntity  {
     }
 
     public void setEmailConfirmed(final boolean emailConfirmed) {
-        this.emailConfirmed = BooleanHelper.getDeafult(emailConfirmed);
+        this.emailConfirmed = BooleanHelper.getDefault(emailConfirmed);
     }
     
     public boolean isEmailConfirmedIsDefaultValue() {
@@ -191,7 +191,7 @@ public class UserEntity  {
     }
 
     public void setCellPhoneNumberConfirmed(final boolean cellPhoneNumberConfirmed) {
-        this.cellPhoneNumberConfirmed = BooleanHelper.getDeafult(cellPhoneNumberConfirmed);
+        this.cellPhoneNumberConfirmed = BooleanHelper.getDefault(cellPhoneNumberConfirmed);
     }
     
     public boolean CellPhoneNumberConfirmedIsDefaultValue() {
