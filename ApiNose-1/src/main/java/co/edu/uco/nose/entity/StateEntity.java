@@ -24,7 +24,7 @@ public class StateEntity  {
 		setCountry(country);
 	}
 	
-	private StateEntity(UUID stateId, String name, CountryEntity country) {
+	public StateEntity(UUID stateId, String name, CountryEntity country) {
 		setStateId(stateId);
 		setName(name);
 		setCountry(country);

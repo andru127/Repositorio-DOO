@@ -1,6 +1,5 @@
 package co.edu.uco.nose.crosscutting.helpers;
 
-import co.edu.uco.nose.crosscutting.helpers.ObjectHelper;
 
 public final class TextHelper {
 	private static final String EMPTY="";
@@ -19,6 +18,10 @@ public static String getDefaultWithTrim(final String value) {
 }
 public static boolean isEmpty(final String value) {
 	return EMPTY.equals(getDefault(value));
+}
+
+public static boolean isEmptyWithTrim(final String value) {
+	return EMPTY.equals(getDefaultWithTrim(value));
 }
 
 }
