@@ -14,10 +14,8 @@ import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
 import co.edu.uco.nose.data.dao.entity.CityDAO;
 import co.edu.uco.nose.entity.SqlConnection;
 import co.edu.uco.nose.entity.StateEntity;
-import co.edu.uco.nose.entity.UserEntity;
 import co.edu.uco.nose.entity.CityEntity;
-import co.edu.uco.nose.entity.CountryEntity;
-import co.edu.uco.nose.entity.IdTypeEntity;
+
 
 public class CityPostgresqlDAO extends SqlConnection implements CityDAO {
 

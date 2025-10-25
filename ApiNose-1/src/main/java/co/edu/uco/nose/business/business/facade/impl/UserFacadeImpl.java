@@ -13,36 +13,30 @@ import co.edu.uco.nose.dto.UserDTO;
 
 public final class UserFacadeImpl implements UserFacade {
 	
-	@Override
-	public void registerNewUserInformation(final UserDTO userDTO) {
-		var daoFactory = DAOFactory.getFactory();
-		var business = new UserBusinessImpl(daoFactory);
-		
-		try {
-			daoFactory.initTransaction();  //SOLO SE USA EN LAS OPERACIONES DE UPDATE, DE RESTO SOLO SE ABRE Y SE CIERRA
-			
-			var domain = UserDTOAssembler.getUserDTOAssembler().toDomain(userDTO);
-			business.registerNewUserInformation(domain);
-			
-			daoFactory.commitTransaction(); //TAMPOCO IRÍA EL COMMIT EN LAS QUE NO SON UPDATE
-			
-			
-		} catch (final NoseException exception) {
-			daoFactory.rollbackTransaction();
-			throw exception;
-		} catch (final Exception exception ) {
-			daoFactory.rollbackTransaction();
-			
-			var userMessage = "";
-			var technicalMessage = "";
-			
-			throw NoseException.create(exception, userMessage, technicalMessage);
-			
-		} finally {
-			daoFactory.closeConnection();
-		}
-		
-	}
+	 @Override
+	    public void registerNewUserInformation(final UserDTO userDto) {
+	        var daoFactory = DAOFactory.getFactory();
+	        var business = new UserBusinessImpl(daoFactory);
+	        try {
+	            daoFactory.initTransaction();
+	            var domain = UserDTOAssembler.getUserDTOAssembler().toDomain(userDto);
+	            business.registerNewUserInformation(domain);
+	            daoFactory.commitTransaction();
+	            //
+	        } catch (final NoseException exception){
+	            daoFactory.rollbackTransaction();
+	            throw exception;
+	        } catch (final Exception exception){
+	            daoFactory.rollbackTransaction();
+	            var userMessage = "";
+	            var technicalMessage = "";
+
+	            throw NoseException.create(exception, userMessage, technicalMessage);
+	        } finally {
+	            daoFactory.closeConnection();
+	        }
+
+	    }
 
 	@Override
 	public void dropUserInformation(UUID id) {
