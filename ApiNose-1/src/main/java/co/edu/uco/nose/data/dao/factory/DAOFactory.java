@@ -64,7 +64,7 @@ public abstract class DAOFactory {
     	SqlConnectionHelper.ensureTransactionIsStarted(connection);
 
         try{
-            connection.setAutoCommit(false);
+            connection.setAutoCommit(true);
         } catch (final SQLException exception){
             var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_STARTED.getContent();
             var techincalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_STARTED.getContent();
