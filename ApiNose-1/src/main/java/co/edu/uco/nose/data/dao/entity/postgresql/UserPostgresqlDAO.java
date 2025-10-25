@@ -1,7 +1,6 @@
 package co.edu.uco.nose.data.dao.entity.postgresql;
 
 import co.edu.uco.nose.crosscutting.exception.NoseException;
-import co.edu.uco.nose.crosscutting.helpers.BooleanHelper;
 import co.edu.uco.nose.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.nose.crosscutting.helpers.SqlConnectionHelper;
 import co.edu.uco.nose.crosscutting.helpers.TextHelper;
@@ -28,8 +27,20 @@ public final class UserPostgresqlDAO extends SqlConnection implements UserDAO {
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("INSERT INTO User(id, tipoIdentificacion, numeroIdentificacion, primerNombre, segundoNombre, primerApellido, segundoApellido, ciudadResidencia, correoElectronico, numeroTelefonoMovil, correoElectronicoConfirmado, numeroTelefonoMovilConfirmado) ");
-        sql.append("SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
+        sql.append("INSERT INTO \"Usuario\" (");
+        sql.append("\"usuarioId\", ");
+        sql.append("\"tipoIdentificacion\", ");
+        sql.append("\"numeroIdentificacion\", ");
+        sql.append("\"primerNombre\", ");
+        sql.append("\"segundoNombre\", ");
+        sql.append("\"primerApellido\", ");
+        sql.append("\"segundoApellido\", ");
+        sql.append("\"ciudadResidencia\", ");
+        sql.append("\"correoElectronico\", ");
+        sql.append("\"numeroTelefonoMovil\", ");
+        sql.append("\"correoElectronicoConfirmado\", ");
+        sql.append("\"numeroTelefonoMovilConfirmado\"");
+        sql.append(") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         try (var preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
             preparedStatement.setObject(1, entity.getUserId());

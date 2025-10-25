@@ -9,7 +9,7 @@ import co.edu.uco.nose.business.domain.UserDomain;
 import co.edu.uco.nose.crosscutting.helpers.ObjectHelper;
 import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
 import co.edu.uco.nose.entity.UserEntity;
-;
+
 
 public final class UserEntityAssembler implements EntityAssembler<UserEntity, UserDomain> {
 
