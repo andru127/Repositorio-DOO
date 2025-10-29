@@ -277,18 +277,19 @@ private List<UserEntity> executeSentenceFindByFilter(final PreparedStatement pre
         SqlConnectionHelper.ensureTransactionIsStarted(getConnection());
 
         final var sql = new StringBuilder();
-        sql.append("UPDATE User ");
-        sql.append("SET tipoIdentificacion = ?, ");
-        sql.append("    numeroIdentificacion = ?, ");
-        sql.append("    primerNombre = ?, ");
-        sql.append("    segundoNombre = ?, ");
-        sql.append("    primerApellido = ?, ");
-        sql.append("    segundoApellido = ?, ");
-        sql.append("    ciudadResidencia = ?, ");
-        sql.append("    correoElectronico = ?, ");
-        sql.append("    numeroTelefonoMovil = ?, ");
-        sql.append("    correoElectronicoConfirmado = ?, ");
-        sql.append("    numeroTelefonoMovilConfirmado = ? ");
+        sql.append("UPDATE \"User\" ");
+        sql.append("SET \"tipoIdentificacion\" = ?, ");
+        sql.append("    \"numeroIdentificacion\" = ?, ");
+        sql.append("    \"primerNombre\" = ?, ");
+        sql.append("    \"segundoNombre\" = ?, ");
+        sql.append("    \"primerApellido\" = ?, ");
+        sql.append("    \"segundoApellido\" = ?, ");
+        sql.append("    \"ciudadResidencia\" = ?, ");
+        sql.append("    \"correoElectronico\" = ?, ");
+        sql.append("    \"numeroTelefonoMovil\" = ?, ");
+        sql.append("    \"correoElectronicoConfirmado\" = ?, ");
+        sql.append("    \"numeroTelefonoMovilConfirmado\" = ? ");
+
         sql.append("WHERE id = ?;");
 
         try (final PreparedStatement preparedStatement = this.getConnection().prepareStatement(sql.toString())) {
