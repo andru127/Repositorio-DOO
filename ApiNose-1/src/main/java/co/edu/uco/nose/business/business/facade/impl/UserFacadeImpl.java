@@ -22,7 +22,7 @@ public final class UserFacadeImpl implements UserFacade {
 	            var domain = UserDTOAssembler.getUserDTOAssembler().toDomain(userDto);
 	            business.registerNewUserInformation(domain);
 	            daoFactory.commitTransaction();
-	            //
+	            
 	        } catch (final NoseException exception){
 	            daoFactory.rollbackTransaction();
 	            throw exception;

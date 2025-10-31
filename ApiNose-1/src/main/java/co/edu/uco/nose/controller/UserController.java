@@ -59,8 +59,32 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public String registerNewUserInformation(@RequestBody UserDTO user) {
-		return "POST: User registered!";
+	public ResponseEntity<Response<UserDTO>> registerNewUserInformation(@RequestBody UserDTO user) {
+		Response<UserDTO> responseObjectData = Response.createSuccededResponse();
+		HttpStatusCode responseStatusCode = HttpStatus.OK;
+		
+	try {
+		var facade = new UserFacadeImpl();
+		facade.registerNewUserInformation(user);
+		responseObjectData.addMessage(" User registered sucesfully");
+		
+		
+	} catch (final NoseException exception) {
+		responseObjectData = Response.createFailedResponse();
+		responseObjectData.addMessage(exception.getUserMessage());
+		responseStatusCode = HttpStatus.BAD_REQUEST;
+		exception.printStackTrace();
+	} catch( Exception exception) {
+		var userMessage = "Unexpected error";
+		responseObjectData = Response.createFailedResponse();
+		responseObjectData.addMessage(userMessage);
+		responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		exception.printStackTrace();
+	}
+		
+		return new ResponseEntity<>(responseObjectData, responseStatusCode);
+		
+	
 	}
 	
 	@PutMapping("/{id}")
@@ -69,8 +93,31 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public String dropUserInformation(@PathVariable UUID id) {
-		return "DELETE: User deleted!";
+	public ResponseEntity<Response<UserDTO>> dropUserInformation(@PathVariable UUID id) {
+		Response<UserDTO> responseObjectData = Response.createSuccededResponse();
+		HttpStatusCode responseStatusCode = HttpStatus.OK;
+		
+	try {
+		var facade = new UserFacadeImpl();
+		facade.dropUserInformation(id);
+		responseObjectData.addMessage(" User deleted sucesfully");
+		
+		
+	} catch (final NoseException exception) {
+		responseObjectData = Response.createFailedResponse();
+		responseObjectData.addMessage(exception.getUserMessage());
+		responseStatusCode = HttpStatus.BAD_REQUEST;
+		exception.printStackTrace();
+	} catch( Exception exception) {
+		var userMessage = "Unexpected error";
+		responseObjectData = Response.createFailedResponse();
+		responseObjectData.addMessage(userMessage);
+		responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		exception.printStackTrace();
+	}
+		
+		return new ResponseEntity<>(responseObjectData, responseStatusCode);
+		
 	}
 	
 }

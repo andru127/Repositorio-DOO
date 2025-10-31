@@ -26,11 +26,15 @@ public final class PostgresqlDAOFactory extends DAOFactory {
 	@Override
 	protected void openConnection() {
 		try {
-			 var url = "jdbc:postgresql://localhost:5432/nose_db";
-		     var user = "postgres";
-		     var password = "Andresmalua23";
-			
-		this.connection = DriverManager.getConnection(url, user, password);
+	        Class.forName("org.postgresql.Driver");
+
+	        String url = "jdbc:postgresql://localhost:5432/nose_db";
+	        String user = "postgres";
+	        String password = "Andresmalua23";
+
+	        this.connection = DriverManager.getConnection(url, user, password);
+	        this.connection.setAutoCommit(false);
+	        
 		} catch(final SQLException exception) {
 			var userMessage = MessagesEnum.USER_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_CLOSED.getContent();
 			var technicalMessage = MessagesEnum.TECHNICAL_ERROR_SQL_CONNECTION_SQL_EXCEPTION_VALIDATING_TRANSACTION_IS_CLOSED.getContent();
