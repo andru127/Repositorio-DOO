@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import co.edu.uco.nose.business.assembler.entity.impl.UserEntityAssembler;
 import co.edu.uco.nose.business.business.UserBusiness;
+import co.edu.uco.nose.business.business.validator.idtype.ValidateIdTypeExistsById;
+import co.edu.uco.nose.business.business.validator.user.ValidateDataUserConsistencyForRegisterNewInformation;
 import co.edu.uco.nose.business.domain.UserDomain;
 import co.edu.uco.nose.crosscutting.helpers.UUIDHelper;
 import co.edu.uco.nose.data.dao.factory.DAOFactory;
@@ -19,27 +21,51 @@ public final class UserBusinessImpl implements UserBusiness {
 		this.daoFactory = daoFactory;
 	}
 
-	@Override
-	public void registerNewUserInformation(UserDomain userDomain) {
+	@Override 
+	public void registerNewUserInformation(final UserDomain userDomain) {
 		
 		//1. Validar que la informacion sea consistente a nivel de tipo de dato, longitud, oblatoriedad
-		//2. Validar que no exista otro usuario con el mismo tipo y número de documento
-		//3. Validar que no exista previamente un usuario con el mismo email
-		//4. Validar que no exista previamente un usuario con el mismo número de teléfono celular
-		//5. Generar un identificador para el nuevo usuario, asegurando de que no exista previamente
+		ValidateDataUserConsistencyForRegisterNewInformation.executeValidation(userDomain);
 		
-		var id = UUIDHelper.getUUIDHelper().generateNewUUID();
+		//2. Validar que exista el tipo de identificacion
+		ValidateIdTypeExistsById.executeValidation(userDomain.getIdentificationType().getId(), daoFactory);
+
+		//3. Validar que exista la ciudad de residencia
+
+		
+		//4. Validar que no exista otro usuario con el mismo tipo y número de documento
+		//5. Validar que no exista previamente un usuario con el mismo email
+		//6. Validar que no exista previamente un usuario con el mismo número de teléfono celular
+		
+		//7. Ensamblar objeto como entity
 		var userEntity = UserEntityAssembler.getUserEntityAssembler().toEntity(userDomain);
 		
-		userEntity.setUserId(id);
+		//8. Generar Id
+		userEntity.setUserId(generateId());
 		
+		//9. Registrar la informacion del nuevo usuario
 		daoFactory.getUserDAO().create(userEntity);
 		
 	}
 
+	private UUID generateId() {
+		var id = UUIDHelper.getUUIDHelper().generateNewUUID();
+		var userEntity = daoFactory.getUserDAO().findById(id);
+		
+		while (!UUIDHelper.getUUIDHelper().isDefaultUUID(userEntity.getUserId())) {
+			id = UUIDHelper.getUUIDHelper().generateNewUUID();
+			userEntity = daoFactory.getUserDAO().findById(id);
+		}
+		
+		return id;
+
+	}
+		
+	
+	
 	@Override
 	public void dropUserInformation(UUID id) {
-		// TODO Auto-generated method stub
+		daoFactory.getUserDAO().delete(id);
 		
 	}
 

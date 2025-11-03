@@ -5,9 +5,11 @@ import java.util.UUID;
 
 import co.edu.uco.nose.business.domain.UserDomain;
 
+
+
 public interface UserBusiness {
 	
-	public void registerNewUserInformation(UserDomain userDomain);
+	void registerNewUserInformation(final UserDomain userDomain);
 		
 	void dropUserInformation(UUID id);
 	

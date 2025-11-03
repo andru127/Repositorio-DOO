@@ -3,7 +3,6 @@ package co.edu.uco.nose.business.business.facade;
 import java.util.List;
 import java.util.UUID;
 
-import co.edu.uco.nose.business.domain.UserDomain;
 import co.edu.uco.nose.dto.UserDTO;
 
 public interface UserFacade {
@@ -18,7 +17,7 @@ public interface UserFacade {
 	
 	List<UserDTO> findUserByFilter(UserDTO userFilters);
 	
-	UserDomain findSpecificUser(UUID id); 
+	UserDTO findSpecificUser(UUID id); 
 	 
 	void confirmMobileNumber(UUID id, int confirmationCode);
 	
